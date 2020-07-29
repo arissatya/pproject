@@ -1,0 +1,14 @@
+[
+  {
+    "makanan": "Mie Pangsit Bakso",
+    "harga": 20000
+  },
+  {
+    "makanan": "Nasi Rames Ayam",
+    "harga": 15000
+  },
+  {
+    "makanan": "Sop Kacang Polong",
+    "harga": 15000
+  }
+]
