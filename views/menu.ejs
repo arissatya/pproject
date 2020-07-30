@@ -5,17 +5,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="style.css" , rel="stylesheet" type="text/css">
+  
+  <style>
+    body {
+      background-image: url('/img/bg.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    </style>
+
   <title><%= title %></title>
 </head>
 
 <body>
+  <!-- <img src="/img/bg.jpg"> -->
   <h1><%= title %></h1>
   <table>
     <th>YOUR PICK</th>
     <th>ORDER</th>
     <% data.forEach(el => { %>
     <tr>
-      <td><%=el.menu%></td>
+      <td><%=el.menu.toUpperCase()%></td>
       <td><a href="/menu/order/<%=el.menu%>"><button>ORDER!</button></a></td>
     </tr>
     <% }) %>

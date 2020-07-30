@@ -10,7 +10,6 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-
 class Controller {
   static rootPage(req, res) {
     res.redirect('/menu')
@@ -49,38 +48,6 @@ class MenuControl {
       })
   }
 
-  //add
-  static requestMenu(req, res) {
-    res.render('form')
-  }
-
-  // static saveRequest(req, res) {
-  //   let input = {
-  //     nama: req.body.nama,
-  //     saran: req.body.saran,
-  //   }
-  //   MenuRequest.create(input)
-  //     .then(res => {
-  //       res.redirect('/')
-  //     })
-  //     .catch(err => {
-  //       res.send(err)
-  //     })
-  // }
-
-  // //delete
-  // static deleteRequest(req, res) {
-  //   let id = Number(req.params.id)
-  //   MenuRequest.destroy({
-  //     where: { id }
-  //   })
-  //     .then(result => {
-  //       res.redirect('/')
-  //     })
-  //     .catch(err => {
-  //       res.send(err)
-  //     })
-  // }
 }
 
 class RestoControl {
@@ -117,21 +84,21 @@ class RestoControl {
 
 class OrderControl {
   static showAllOrder(req, res) {
-    // if(req.session.isOrdered === true){
-      Order.findAll({
-        attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
-        include: [ Resto, Menu ]
+    if(req.session.isOrdered === true){
+    Order.findAll({
+      attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
+      include: [Resto, Menu]
+    })
+      .then(result => {
+        let data = result
+        res.render('orders', { title: "YOUR ORDER", data })
       })
-        .then(result => {
-          let data = result
-          res.render('orders', { title: "YOUR ORDER", data })
-        })
-        .catch(err => {
-          res.send(err)
-        })
-    // } else {
-    //   res.redirect('/menu')
-    // }
+      .catch(err => {
+        res.send(err)
+      })
+    } else {
+      res.redirect('/menu')
+    }
   }
 
   static addOrder(req, res) {
@@ -155,43 +122,43 @@ class OrderControl {
   static deleteOrder(req, res) {
     let id = Number(req.params.id)
     Order.destroy({
-      where: {id}
+      where: { id }
     })
-    .then(reult=>{
-      res.redirect('/order')
-    })
-    .catch(err=>{
-      res.send(err)
-    })
+      .then(reult => {
+        res.redirect('/order')
+      })
+      .catch(err => {
+        res.send(err)
+      })
   }
 
-  static completeOrder (req,res){
+  static completeOrder(req, res) {
     req.session.isOrdered = false
 
     let mailOptions = {
       from: 'menumu.menu@gmail.com',
       to: `${req.body.email}`,
       subject: 'Thank You For Ordering',
-      text: `Thank You For Ordering from Menumu, food coming soon via ${req.body.send_via}. Your sub total is ${req.body.total}`
+      text: `Thank You For Ordering from Menumu, food coming soon via ${req.body.send_via}. Your sub total is Rp.${req.body.total}`
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {
         console.log('Email sent');
       }
-    }); 
+    });
 
     Order.destroy({
-      where:{}
+      where: {}
     })
-    .then(result=>{
-      res.render('thanks')
-    })
-    .catch(err=>{
-      res.send(err)
-    })
+      .then(result => {
+        res.render('thanks')
+      })
+      .catch(err => {
+        res.send(err)
+      })
   }
 
 }
