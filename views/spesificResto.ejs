@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      text-align: center;
+      vertical-align: middle;
+      margin-top: 25px;
+      /* margin: auto; */
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    table {
+      width: 50%;
+      padding: 10px;
+      margin-top: 50px;
+      margin-right: auto;
+      margin-left: auto;
+      border: solid rgb(104, 0, 0) 15px;
+      border-radius: 10px;
+    }
+
+    body {
+      background-image: url('/img/bg.jpg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
+  </style>
+  <title><%=data.namaResto%></title>
+</head>
+
+<body>
+  <h1><%=data.namaResto%></h1>
+  <table>
+    <th>THE MENUS</th>
+    <th>ORDER</th>
+    <% data.ListMenus.forEach(el=>{ %>
+      <tr>
+        <td><%=el.makanan%></td>
+        <td><a href="/order/input?harga=<%=el.harga%>&MenuId=<%=el.id%>&RestoId=<%=el.RestoId%>&namaMakanan=<%=el.makanan%>"><button>ORDER!</button></a></td>
+      </tr>
+        <% }) %>
+  </table><br><br>
+
+  <%- include ('./partials/nav.ejs')%>
+
+
+</body>
+
+</html>

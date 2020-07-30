@@ -1,0 +1,47 @@
+[
+  {
+    "RestoId" : 1,
+    "makanan": "Mie Goreng Desa",
+    "harga": 15000
+  },
+  {
+    "RestoId" : 1,
+    "makanan": "Nasi Goreng Telur",
+    "harga": 15000
+  },
+  {
+    "RestoId" : 1,
+    "makanan": "Sop Wortel",
+    "harga": 20000
+  },
+  {
+    "RestoId" : 2,
+    "makanan": "Mie Pangsit Bakso",
+    "harga": 20000
+  },
+  {
+    "RestoId" : 2,
+    "makanan": "Nasi Rames Ayam",
+    "harga": 15000
+  },
+  {
+    "RestoId" : 2,
+    "makanan": "Sop Kacang Polong",
+    "harga": 15000
+  },
+  {
+    "RestoId" : 3,
+    "makanan": "Mie Goreng Ulang Tahun",
+    "harga": 50000
+  },
+  {
+    "RestoId" : 3,
+    "makanan": "Nasi Ayam Mozarella",
+    "harga": 45000
+  },
+  {
+    "RestoId" : 3,
+    "makanan": "Sop Kepiting Jumbo",
+    "harga": 60000
+  }
+]

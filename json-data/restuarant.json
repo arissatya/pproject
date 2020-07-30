@@ -1,0 +1,14 @@
+[
+  {
+    "namaResto":"RM Mangkok",
+    "restoMenuId":1
+  },
+  {
+    "namaResto":"Warung Piring Lebar",
+    "restoMenuId":2
+  },
+  {
+    "namaResto":"Resto Sendok Garpu",
+    "restoMenuId":3
+  }
+]
