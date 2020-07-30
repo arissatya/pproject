@@ -10,7 +10,12 @@
 
 <body>
   <h1><%= title %></h1>
-  <form action="/order/complete" method="POST">
+  <% if(data.length === 0) {%>
+    <br>
+    <h2>Oops..</h2>
+    <h2>You are not ordered anything yet..</h2>
+    <a href="/resto">Check our retos</a>
+    <% } else { %>
     <table>
       <th>AVAILABLE MENUS</th>
       <th>HARGA</th>
@@ -27,8 +32,7 @@
       </table>
       <%- include ('./partials/sendVia.ejs')%>
       <h2> TOTAL HARGA : Rp.<%=x%> </h2>
-        <input type="submit" value="COMPLETE ORDER">
-    </form>
+      <a href="/order/complete"><button>COMPLETE ORDER</button></a>
       
       <p class="small_head">Your food is froms:</p>
   <table class="small_table">
@@ -39,6 +43,7 @@
     <% }) %>
   </table>
   <%- include ('./partials/nav.ejs')%>
+  <% } %>
 
 </body>
 

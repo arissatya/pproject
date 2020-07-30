@@ -1,6 +1,7 @@
 const { Menu, Resto, Order, ListMenu } = require('../models/index.js')
 const { Op } = require('sequelize')
 
+
 class Controller {
   static rootPage(req, res) {
     res.redirect('/menu')
@@ -107,20 +108,26 @@ class RestoControl {
 
 class OrderControl {
   static showAllOrder(req, res) {
-    Order.findAll({
-      attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
-      include: [ Resto, Menu ]
-    })
-      .then(result => {
-        let data = result
-        res.render('orders', { title: "YOUR ORDER", data })
+    if(req.session.isOrdered === true){
+      Order.findAll({
+        attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
+        include: [ Resto, Menu ]
       })
-      .catch(err => {
-        res.send(err)
-      })
+        .then(result => {
+          let data = result
+          console.log(data);
+          res.render('orders', { title: "YOUR ORDER", data })
+        })
+        .catch(err => {
+          res.send(err)
+        })
+    } else {
+      res.redirect('/menu')
+    }
   }
 
   static addOrder(req, res) {
+    req.session.isOrdered = true
     let input = {
       harga: Number(req.query.harga),
       RestoId: Number(req.query.RestoId),
@@ -151,11 +158,12 @@ class OrderControl {
   }
 
   static completeOrder (req,res){
+    req.session.isOrdered = false
     Order.destroy({
       where:{}
     })
-    .then(res=>{
-      res.redirect('/resto')
+    .then(result=>{
+      res.render('thanks')
     })
     .catch(err=>{
       res.send(err)

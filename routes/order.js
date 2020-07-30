@@ -8,7 +8,8 @@ router.get('/', OrderControl.showAllOrder)
 
 //add data by form ejs
 router.get('/input', OrderControl.addOrder)
+
 router.get('/:id/delete', OrderControl.deleteOrder)
 
-router.post('/complete', OrderControl.completeOrder)
+router.get('/complete', OrderControl.completeOrder)
 module.exports = router;
