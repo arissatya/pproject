@@ -8,6 +8,11 @@ app.set('view engine', 'ejs');
 app.use(express.static('assets'));
 app.use(express.urlencoded({ extended: true }));
 
+// app.use((req,res,next)=>{
+//   console.log('JALAN');
+//   next()
+// })
+
 app.use('/', index)
 
 app.listen(PORT, () => {

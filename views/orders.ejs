@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" , rel="stylesheet" type="text/css">
+  <title><%= title %></title>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <form action="/order/complete" method="POST">
+    <table>
+      <th>AVAILABLE MENUS</th>
+      <th>HARGA</th>
+      <th>ACTION</th>
+      <% let x = 0 %>
+      <% data.forEach(el => { %>
+        <% x = x + el.harga %>
+        <tr>
+          <td><%=el.namaMakanan%></td>
+          <td>Rp.<%=el.harga%></td>
+          <td><a href="/order/<%=el.id%>/delete"><button>remove</button></a></td>
+        </tr>
+        <% }) %>
+      </table>
+      <%- include ('./partials/sendVia.ejs')%>
+      <h2> TOTAL HARGA : Rp.<%=x%> </h2>
+        <input type="submit" value="COMPLETE ORDER">
+    </form>
+      
+      <p class="small_head">Your food is froms:</p>
+  <table class="small_table">
+    <tr>
+      <% data.forEach(el => { %>
+      <td><b><%=el.Resto.namaResto%></b></td>
+    </tr>
+    <% }) %>
+  </table>
+  <%- include ('./partials/nav.ejs')%>
+
+</body>
+
+</html>

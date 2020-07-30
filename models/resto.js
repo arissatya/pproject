@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Resto.init({
     namaResto: DataTypes.STRING,
-    menuId: DataTypes.INTEGER
+    restoMenuId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Resto',

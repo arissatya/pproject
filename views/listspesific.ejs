@@ -21,24 +21,26 @@
       margin-left: auto;
     }
   </style>
-  <title><%=data.namaResto%></title>
+  <title><%=title%></title>
 </head>
 
 <body>
-  <h1><%=data.namaResto%></h1>
+  <h2>WANNA EAT: <%=title%> ?</h2>
   <table>
     <th>THE MENUS</th>
-    <th>ORDER</th>
-    <% data.ListMenus.forEach(el=>{ %>
-      <tr>
-        <td><%=el.makanan%></td>
-        <td><a href="/order/input?harga=<%=el.harga%>&MenuId=<%=el.id%>&RestoId=<%=el.RestoId%>&namaMakanan=<%=el.makanan%>"><button>ORDER!</button></a></td>
-      </tr>
-        <% }) %>
+    <th>RESTO</th>
+    <% data.forEach(el => { %>
+    <tr>
+      <td><%=el.makanan%></td>
+      <td><%=el.Resto.namaResto%></td>
+      <td><a
+          href="/order/input?harga=<%=el.harga%>&MenuId=<%=el.id%>&RestoId=<%=el.RestoId%>&namaMakanan=<%=el.makanan%>"><button>ORDER!</button></a>
+      </td>
+    </tr>
+    <% }) %>
   </table><br><br>
 
   <%- include ('./partials/nav.ejs')%>
-
 
 </body>
 

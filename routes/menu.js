@@ -6,6 +6,8 @@ const {MenuControl} = require('../controller/controller.js');
 //menu
 router.get('/', MenuControl.showMenu)
 
+router.get('/order/:makanan', MenuControl.OrderMenu)
+
 //add data by form ejs
 router.get('/add', MenuControl.requestMenu)
 // router.post('/add', MenuControl.saveRequest)

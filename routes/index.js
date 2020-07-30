@@ -11,7 +11,7 @@ const resto = require('../routes/resto.js')
 router.get('/', Controller.rootPage)
 
 router.use('/menu', menu)
-// router.use('/order', order)
+router.use('/order', order)
 router.use('/resto', resto)
 
 module.exports = router;

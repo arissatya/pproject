@@ -1,4 +1,5 @@
 const { Menu, Resto, Order, ListMenu } = require('../models/index.js')
+const { Op } = require('sequelize')
 
 class Controller {
   static rootPage(req, res) {
@@ -11,14 +12,32 @@ class MenuControl {
   static showMenu(req, res) {
     Menu.findAll({})
       .then(data => {
-        console.log(data);
-        res.render('menu', { title: "MENUMU" ,data })
+        res.render('menu', { title: "MENUMU", data })
       })
       .catch(err => {
         res.send(err)
       })
   }
 
+  static OrderMenu(req, res) {
+    let word = req.params.makanan
+    let title = word.toUpperCase()
+    ListMenu.findAll({
+      where: {
+        makanan: {
+          [Op.iLike]: '%' + word + '%'
+        },
+      },
+      include: [Resto]
+    })
+      .then(result => {
+        let data = result
+        res.render('listspesific', { data, title })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
 
   //add
   static requestMenu(req, res) {
@@ -55,32 +74,94 @@ class MenuControl {
 }
 
 class RestoControl {
-  static showAllResto(req,res){
+  static showAllResto(req, res) {
     Resto.findAll({})
       .then(data => {
-        console.log(data);
-        res.render('resto', { title: "RESTOMU" ,data })
+        // console.log(data);
+        res.render('resto', { title: "RESTOMU", data })
       })
       .catch(err => {
         res.send(err)
       })
   }
 
-  static checkResto(req,res){
+  static checkResto(req, res) {
     let id = Number(req.params.id)
     Resto.findOne({
-      where:{id},
-      include:[ListMenu]
+      where: { id },
+      include: [{
+        model: ListMenu,
+        // where: {id}
+      }]
     })
-    .then(result=>{
-      let data = result
-      console.log(result);
-      res.render('spesificResto', {data})
+      .then(result => {
+        let data = result
+        // console.log(result);
+        res.render('spesificResto', { data })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+}
+
+class OrderControl {
+  static showAllOrder(req, res) {
+    Order.findAll({
+      attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
+      include: [ Resto, Menu ]
+    })
+      .then(result => {
+        let data = result
+        res.render('orders', { title: "YOUR ORDER", data })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static addOrder(req, res) {
+    let input = {
+      harga: Number(req.query.harga),
+      RestoId: Number(req.query.RestoId),
+      MenuId: Number(req.query.MenuId),
+      namaMakanan: req.query.namaMakanan,
+    }
+    Order.create(input)
+      .then(result => {
+        // console.log(result);
+        res.redirect('/order')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static deleteOrder(req, res) {
+    let id = Number(req.params.id)
+    Order.destroy({
+      where: {id}
+    })
+    .then(reult=>{
+      res.redirect('/order')
     })
     .catch(err=>{
       res.send(err)
     })
   }
+
+  static completeOrder (req,res){
+    Order.destroy({
+      where:{}
+    })
+    .then(res=>{
+      res.redirect('/resto')
+    })
+    .catch(err=>{
+      res.send(err)
+    })
+  }
+
 }
 
-module.exports = { Controller, MenuControl , RestoControl }
+module.exports = { Controller, MenuControl, RestoControl, OrderControl }

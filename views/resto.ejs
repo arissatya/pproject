@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" , rel="stylesheet" type="text/css">
   <title><%= title %></title>
 </head>
 
@@ -12,13 +13,15 @@
   <table>
     <th>RESTO MENUS</th>
     <th>MENUS</th>
-    <!-- <% data.forEach(el => { %> -->
+    <% data.forEach(el => { %>
     <tr>
-      <td><%=data.namaResto%></td>
-      <td><a href="/resto/<%=data.menuId%>"><button>CHECK MENU!</button></a></td>
+      <td><%=el.namaResto%></td>
+      <td><a href="/resto/<%=el.restoMenuId%>"><button>CHECK MENU!</button></a></td>
     </tr>
-    <!-- <% }) %> -->
+    <% }) %>
   </table><br><br>
+  <%- include ('./partials/nav.ejs')%>
+
 </body>
 
 </html>

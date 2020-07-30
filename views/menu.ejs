@@ -4,26 +4,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" , rel="stylesheet" type="text/css">
   <title><%= title %></title>
 </head>
 
 <body>
   <h1><%= title %></h1>
   <table>
-    <th>AVAILABLE MENUS</th>
+    <th>YOUR PICK</th>
     <th>ORDER</th>
     <% data.forEach(el => { %>
     <tr>
       <td><%=el.menu%></td>
-      <td><a href="/order"><button>ORDER!</button></a></td>
+      <td><a href="/menu/order/<%=el.menu%>"><button>ORDER!</button></a></td>
     </tr>
     <% }) %>
   </table><br><br>
 
   <h2><a href="/resto">CHECK RESTO?</a></h2>
 
-  <h1>Want to make future Request ?</h1>
-  <a href="/menu/request"><button>YES PLEASE</button></a>
+  <!-- <h1>Want to make future Request ?</h1>
+  <a href="/menu/request"><button>YES PLEASE</button></a> -->
+
+  <%- include ('./partials/nav.ejs')%>
+
 </body>
 
 </html>
