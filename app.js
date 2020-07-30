@@ -3,7 +3,8 @@ const app = express();
 const index = require('./routes/index.js'); //find root routes
 const session =require('express-session')
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 app.use(session({
   secret: "megalovania",
   resave: false,
