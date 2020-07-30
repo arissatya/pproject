@@ -1,6 +1,6 @@
 'use strict';
 
-let seed = require('../json-data/wr-piring.json')
+let seed = require('../json-data/allmenu.json')
 seed.map(el=>{
   el.createdAt = new Date()
   el.updatedAt = new Date()
@@ -10,7 +10,7 @@ seed.map(el=>{
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('PiringMenus', seed, {})
+    return queryInterface.bulkInsert('ListMenus', seed, {})
     /**
      * Add seed commands here.
      *
@@ -20,12 +20,10 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-  
   },
-  
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('PiringMenus', null, {})
+    return queryInterface.bulkInsert('ListMenus', seed, {})
     /**
      * Add commands to revert seed here.
      *

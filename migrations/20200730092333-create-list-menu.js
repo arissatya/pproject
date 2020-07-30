@@ -1,11 +1,14 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('SendokMenus', {
+    return queryInterface.createTable('ListMenus', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      RestoId: {
         type: Sequelize.INTEGER
       },
       makanan: {
@@ -25,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('SendokMenus');
+    return queryInterface.dropTable('ListMenus');
   }
 };

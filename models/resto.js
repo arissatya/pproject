@@ -12,11 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Resto.belongsToMany(models.Menu, {through: models.Order})
+      Resto.hasMany(models.ListMenu, {
+        sourceKey: 'id',
+        foreignKey: 'RestoId'
+      })
     }
   };
   Resto.init({
     namaResto: DataTypes.STRING,
-    restoMenuId: DataTypes.INTEGER
+    menuId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Resto',
