@@ -11,5 +11,5 @@ router.get('/input', OrderControl.addOrder)
 
 router.get('/:id/delete', OrderControl.deleteOrder)
 
-router.get('/complete', OrderControl.completeOrder)
+router.post('/complete', OrderControl.completeOrder)
 module.exports = router;

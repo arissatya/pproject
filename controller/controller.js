@@ -1,5 +1,14 @@
 const { Menu, Resto, Order, ListMenu } = require('../models/index.js')
 const { Op } = require('sequelize')
+const nodemailer = require('nodemailer')
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'menumu.menu@gmail.com',
+    pass: 'menu1234'
+  }
+});
 
 
 class Controller {
@@ -108,22 +117,21 @@ class RestoControl {
 
 class OrderControl {
   static showAllOrder(req, res) {
-    if(req.session.isOrdered === true){
+    // if(req.session.isOrdered === true){
       Order.findAll({
         attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
         include: [ Resto, Menu ]
       })
         .then(result => {
           let data = result
-          console.log(data);
           res.render('orders', { title: "YOUR ORDER", data })
         })
         .catch(err => {
           res.send(err)
         })
-    } else {
-      res.redirect('/menu')
-    }
+    // } else {
+    //   res.redirect('/menu')
+    // }
   }
 
   static addOrder(req, res) {
@@ -159,6 +167,22 @@ class OrderControl {
 
   static completeOrder (req,res){
     req.session.isOrdered = false
+
+    let mailOptions = {
+      from: 'menumu.menu@gmail.com',
+      to: `${req.body.email}`,
+      subject: 'Thank You For Ordering',
+      text: `Thank You For Ordering from Menumu, food coming soon via ${req.body.send_via}. Your sub total is ${req.body.total}`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent');
+      }
+    }); 
+
     Order.destroy({
       where:{}
     })

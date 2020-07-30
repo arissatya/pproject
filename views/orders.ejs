@@ -15,9 +15,10 @@
     <h2>Oops..</h2>
     <h2>You are not ordered anything yet..</h2>
     <a href="/resto">Check our retos</a>
+
     <% } else { %>
     <table>
-      <th>AVAILABLE MENUS</th>
+      <th>YOUR CHOICES</th>
       <th>HARGA</th>
       <th>ACTION</th>
       <% let x = 0 %>
@@ -30,9 +31,13 @@
         </tr>
         <% }) %>
       </table>
+      <form action="/order/complete" method="POST">
+      <input type="email" name="email" placeholder="your email?">
       <%- include ('./partials/sendVia.ejs')%>
-      <h2> TOTAL HARGA : Rp.<%=x%> </h2>
-      <a href="/order/complete"><button>COMPLETE ORDER</button></a>
+
+      
+      <h2> TOTAL HARGA : Rp. <input type="number" name="total" value="<%=x%>" readonly> </h2>
+      <button type="submit">COMPLETE ORDER</button>
       
       <p class="small_head">Your food is froms:</p>
   <table class="small_table">
@@ -42,6 +47,7 @@
     </tr>
     <% }) %>
   </table>
+</form>
   <%- include ('./partials/nav.ejs')%>
   <% } %>
 
