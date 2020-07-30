@@ -1,4 +1,4 @@
-const { Menu, Resto, Order, ListMenu } = require('../models/index.js')
+const { Menu, Resto, Order, ListMenu, RequestUser } = require('../models/index.js')
 const { Op } = require('sequelize')
 const nodemailer = require('nodemailer')
 
@@ -48,6 +48,41 @@ class MenuControl {
       })
   }
 
+  static requestForm(req,res){
+    res.render('form', {title:"YOUR REQUEST?"})
+  }
+
+  static saveform(req,res){
+    let input = {
+      name: req.body.name,
+      email: req.body.email,
+      comment: req.body.comment,
+    }
+
+    let mailOptions = {
+      from: 'menumu.menu@gmail.com',
+      to: `${req.body.email}`,
+      subject: 'Thank You For Ordering',
+      text: `Thank You ${req.body.name} for your input and request, we will try to make it really happend :)`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent');
+      }
+    });
+
+    RequestUser.create(input)
+    .then(result=>{
+      res.redirect('/menu')
+    })
+    .catch(err=>{
+      res.send(err)
+    })
+  }
+
 }
 
 class RestoControl {
@@ -84,18 +119,18 @@ class RestoControl {
 
 class OrderControl {
   static showAllOrder(req, res) {
-    if(req.session.isOrdered === true){
-    Order.findAll({
-      attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
-      include: [Resto, Menu]
-    })
-      .then(result => {
-        let data = result
-        res.render('orders', { title: "YOUR ORDER", data })
+    if (req.session.isOrdered === true) {
+      Order.findAll({
+        attributes: ['id', 'harga', 'MenuId', 'RestoId', 'namaMakanan'],
+        include: [Resto, Menu]
       })
-      .catch(err => {
-        res.send(err)
-      })
+        .then(result => {
+          let data = result
+          res.render('orders', { title: "YOUR ORDER", data })
+        })
+        .catch(err => {
+          res.send(err)
+        })
     } else {
       res.redirect('/menu')
     }

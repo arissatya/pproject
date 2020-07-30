@@ -25,5 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'ListMenu',
   });
+
+  ListMenu.beforeCreate((data, option) => {
+    if(data.RestoId %2 == 0){
+      data.makanan = `${data.makanan} (recomended)`
+    }
+    })
+
   return ListMenu;
 };
